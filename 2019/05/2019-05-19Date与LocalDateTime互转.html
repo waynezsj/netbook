@@ -1,0 +1,20 @@
+<p>//将java.util.Date 转换为java8 的java.time.LocalDateTime,默认时区为东8区
+&nbsp;&nbsp;&nbsp;&nbsp;public static LocalDateTime dateConvertToLocalDateTime(Date date) {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return date.toInstant().atOffset(ZoneOffset.of("+8")).toLocalDateTime();
+&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;//将java8 的 java.time.LocalDateTime 转换为 java.util.Date，默认时区为东8区
+&nbsp;&nbsp;&nbsp;&nbsp;public static Date localDateTimeConvertToDate(LocalDateTime localDateTime) {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return Date.from(localDateTime.toInstant(ZoneOffset.of("+8")));
+&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;/**
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* 测试转换是否正确
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+&nbsp;&nbsp;&nbsp;&nbsp;@Test
+&nbsp;&nbsp;&nbsp;&nbsp;public void testDateConvertToLocalDateTime() {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Date date = DateUtils.parseDate("2018-08-01 21:22:22", DateUtils.DATE_YMDHMS);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LocalDateTime localDateTime = DateUtils.dateConvertToLocalDateTime(date);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Long localDateTimeSecond = localDateTime.toEpochSecond(ZoneOffset.of("+8"));
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Long dateSecond = date.toInstant().atOffset(ZoneOffset.of("+8")).toEpochSecond();
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Assert.assertTrue(dateSecond.equals(localDateTimeSecond));
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;</p><attachment contenteditable="false" data-atts="%5B%5D" data-aid=".atts-6bee21d9-281b-4ce8-8138-7ba27bec8a90"></attachment><p><br></p>
