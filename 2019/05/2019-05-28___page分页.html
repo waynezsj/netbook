@@ -1,0 +1,26 @@
+<attachment contenteditable="false" data-atts="%5B%5D" data-aid=".atts-26deccc6-7789-4bb4-91fb-3351349f29f4"></attachment><pre class="ql-syntax" spellcheck="false">public IPage&lt;MsPlan&gt; planList(@RequestBody @Valid DateParam dateParam){
+    Page&lt;MsPlan&gt; page = new Page&lt;&gt;(dateParam.getPageNum(),dateParam.getPageSize());
+    return planService.listByTime(dateParam,page);
+}
+</pre><p><br></p><p><br></p><pre class="ql-syntax" spellcheck="false">public IPage&lt;MsPlan&gt; listByTime(DateParam dateParam, Page&lt;MsPlan&gt; page) {
+//        List&lt;MsPlanVo&gt; planVoList = new ArrayList&lt;&gt;();
+
+        IPage&lt;MsPlan&gt; result = page(page, new QueryWrapper&lt;MsPlan&gt;().lambda()
+                        .ge(MsPlan::getMsStartTime, dateParam.getStartDate())
+                        .lt(MsPlan::getMsEndTime, dateParam.getEndDate())
+//                .eq(MsPlan::getPlanState,1)
+//                .eq(MsPlan::getOpenState,1)
+                        .orderByAsc(MsPlan::getMsStartTime)
+        );
+        List&lt;MsPlan&gt; planList = result.getRecords();
+
+        planList.forEach(item-&gt;{
+            item.setTypeList(planTypeService.list(
+                    new LambdaQueryWrapper&lt;MsPlanType&gt;()
+                            .eq(MsPlanType::getMsPlanId,item.getId())));
+        });
+
+        //TODO 消息模块
+//        //发送给商户
+        return result;
+</pre><p><br></p>
