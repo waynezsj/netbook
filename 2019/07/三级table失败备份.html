@@ -1,1 +1,30 @@
-<attachment contenteditable="false" data-atts="%5B%5D" data-aid=".atts-3f4a25c8-2536-4a7e-8ba5-9f048d0186b9"></attachment><p><br></p>
+<attachment contenteditable="false" data-atts="%5B%5D" data-aid=".atts-3f4a25c8-2536-4a7e-8ba5-9f048d0186b9"></attachment><pre class="ql-syntax" spellcheck="false">&lt;template&gt;
+&lt;!--=======复选group====================================================--&gt;
+
+       &lt;div class="deliverySetting-table"&gt;
+         &lt;div class="table-head"&gt;
+           &lt;div class="selection"&gt;
+             &lt;el-checkbox :indeterminate="indeterminate" v-model="ischeckAll" @change="handleCheckAllChange"&gt;&lt;/el-checkbox&gt;
+             &lt;div&gt;全选==={{ indeterminate }}&lt;/div&gt;
+           &lt;/div&gt;
+
+
+         &lt;/div&gt;
+         &lt;div class="table-body" v-for="(goods,goodsIndex) in goodsList" :key="goodsIndex"&gt;
+           &lt;div class="selection"&gt;
+             &lt;p&gt;&lt;el-checkbox :indeterminate="goods.indeterminate" v-model="goods.selected" @change="handleCheckedSkuAllChange(goodsIndex,goods.goodsId,$event)" :key="goodsIndex"&gt;&lt;/el-checkbox&gt;&lt;/p&gt;
+           &lt;/div&gt;
+           &lt;div class="width185"&gt;&lt;p&gt;品牌名称:{{ goods.brandName }}  商品Id:{{ goods.id}}&lt;/p&gt;&lt;/div&gt;
+           &lt;div class="width265"&gt;
+             &lt;p&gt;SKU列表&lt;/p&gt;
+             &lt;el-checkbox style="margin-left: 30px" v-for="sku in goods.skuList" v-model="sku.selected" @change="handleCheckedSkuChange(goodsIndex,sku.id,goods.goodsId,$event)" :label="sku" :key="sku.id"&gt;
+               {{sku.name}}=={{ sku.id }}
+             &lt;/el-checkbox&gt;
+           &lt;/div&gt;
+
+         &lt;/div&gt;
+       &lt;/div&gt;
+     &lt;/template&gt;
+</pre><p><br></p><p><br></p><p><br></p><pre class="ql-syntax" spellcheck="false">ischeckAll:false,  //全选
+indeterminate : false,//不确定
+</pre><p><br></p><p><br></p><p><br></p><p><br></p>
