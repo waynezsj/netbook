@@ -1,0 +1,138 @@
+<pre class="ql-syntax" spellcheck="false">&lt;el-table
+          ref="multipleTable"
+          :data="list"
+          tooltip-effect="dark"
+          @selection-change="handleSelectionChange"
+          style="width: 100%"
+        &gt;
+          &lt;!--选择框--&gt;
+
+          &lt;el-table-column type="expand"&gt;
+            &lt;template slot-scope="props"&gt;
+              &lt;el-form label-position="left" inline class="demo-table-expand"&gt;
+&lt;!--===========================================================--&gt;
+                &lt;template v-for="(item,index) in props.row.skuList" &gt;
+                  &lt;div class="center-content" style="align:center;" :key="item.id"  aria-multiline="true"&gt;
+                    &lt;!--&lt;el-checkbox v-model="item.checked"&gt;&lt;/el-checkbox&gt;--&gt;
+                    &lt;!--&lt;span &gt; &lt;el-checkbox v-model="item.checked"&gt;&lt;/el-checkbox&gt; &lt;/span&gt;--&gt;
+                    &lt;!--&lt;el-checkbox v-model="item.checked"&gt;&lt;/el-checkbox&gt;--&gt;
+                    &lt;span&gt;&lt;el-checkbox v-model="item.checked" style="padding-left: 60px"/&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/span&gt;
+                    &lt;span&gt;SKU名称: {{ item.name }}&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/span&gt;
+                    &lt;span&gt;&lt;el-image style="width: 80px; height: 80px" :src="item.lucencyImage" fit="cover"/&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/span&gt;
+                    &lt;span&gt;库存:{{ item.stock }} &amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/span&gt;
+                    &lt;span&gt;报名数量:
+                        &lt;el-input
+                          v-model="item.signCount"
+                          :min="2"
+                          style="width: 80px"
+                          size="mini"
+                          placeholder="报名数量"/&gt; 件&amp;nbsp;&amp;nbsp;&amp;nbsp;
+                    &lt;/span&gt;
+                    &lt;span&gt;原价: {{item.marketPrice | formatMoney}} 元&lt;/span&gt;
+                    &lt;span&gt;秒杀价: &lt;el-input
+                      v-model="item.seckillPrice"
+                      :min="2"
+                      style="width: 80px"
+                      size="mini"
+                      placeholder="秒杀价"/&gt; 元
+                    &lt;/span&gt;
+                    &lt;span&gt;
+                      限购：
+                      &lt;el-switch
+                        :active-value="true"
+                        :inactive-value="false"
+                        v-model="item.restrict"
+                      &gt;&lt;/el-switch&gt;
+                    &lt;/span&gt;
+                    &lt;span&gt;
+                      限购数量：
+                      &lt;el-input
+                        :disabled="!item.restrict"
+                        v-model="item.restrictCount"
+                        :min="2"
+                        style="width: 60px"
+                        size="mini"
+                        placeholder="限购数量"/&gt; 件
+                    &lt;/span&gt;
+                    &lt;span&gt;
+
+&lt;el-button size="mini" @click="signUp(scope.row)"&gt;提交报名&lt;/el-button&gt;
+                    &lt;/span&gt;
+                  &lt;/div&gt;
+                &lt;/template&gt;
+
+&lt;!--============================================================--&gt;
+
+              &lt;/el-form&gt;
+            &lt;/template&gt;
+          &lt;/el-table-column&gt;
+
+          &lt;el-table-column
+            type="selection"
+            width="55"&gt;
+          &lt;/el-table-column&gt;
+          &lt;!--商品名称--&gt;
+          &lt;el-table-column
+            label="商品名称"
+            prop="title"
+            width="100"&gt;
+
+          &lt;/el-table-column&gt;
+
+          &lt;!--商品ID--&gt;
+          &lt;el-table-column
+            label="商品ID"
+            v-if="false"
+            prop="id"
+            width="100"&gt;
+
+          &lt;/el-table-column&gt;
+
+          &lt;el-table-column
+            label="品牌名称"
+            width="100"
+            prop="brandName"&gt;
+          &lt;/el-table-column&gt;
+
+          &lt;!--品类Id--&gt;
+          &lt;el-table-column
+            label="分类ID"
+            v-if="false"
+            prop="categoryId"
+            width="100"&gt;
+          &lt;/el-table-column&gt;
+
+          &lt;el-table-column label="商品图片" width="120" align="center"&gt;
+            &lt;template slot-scope="scope"&gt;
+              &lt;el-image style="width: 80px; height: 80px" :src="scope.row.coverImage" fit="cover"&gt;&lt;/el-image&gt;
+            &lt;/template&gt;
+          &lt;/el-table-column&gt;
+
+          &lt;el-table-column label="价格/货号" width="180" align="center"&gt;
+            &lt;template slot-scope="scope"&gt;
+              &lt;p&gt;价格：￥{{scope.row.salePrice | formatMoney}}&lt;/p&gt;
+              &lt;p&gt;货号：{{scope.row.commodityNo}}&lt;/p&gt;
+            &lt;/template&gt;
+          &lt;/el-table-column&gt;
+
+
+          &lt;el-table-column label="总库存" width="100" align="center"&gt;
+            &lt;template slot-scope="scope"&gt;{{scope.row.stock}}&lt;/template&gt;
+          &lt;/el-table-column&gt;
+
+          &lt;el-table-column label="销量" width="100" align="center"&gt;
+            &lt;template slot-scope="scope"&gt;{{scope.row.sale}}&lt;/template&gt;
+          &lt;/el-table-column&gt;
+
+          &lt;el-table-column
+            label="描述"
+            prop="introduction"&gt;
+          &lt;/el-table-column&gt;
+
+          &lt;!--&lt;el-table-column label="操作" width="160" align="center"&gt;--&gt;
+            &lt;!--&lt;template slot-scope="scope"&gt;--&gt;
+              &lt;!--&lt;el-button size="mini" @click="signUp(scope.row)"&gt;提交报名&lt;/el-button&gt;--&gt;
+            &lt;!--&lt;/template&gt;--&gt;
+          &lt;!--&lt;/el-table-column&gt;--&gt;
+        &lt;/el-table&gt;
+</pre><p><br></p><attachment contenteditable="false" data-atts="%5B%5D" data-aid=".atts-4f889603-d7e2-412b-9999-cd15c9db5540"></attachment><p><br></p>
