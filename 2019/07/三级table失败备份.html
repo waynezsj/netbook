@@ -27,4 +27,71 @@
      &lt;/template&gt;
 </pre><p><br></p><p><br></p><p><br></p><pre class="ql-syntax" spellcheck="false">ischeckAll:false,  //全选
 indeterminate : false,//不确定
-</pre><p><br></p><p><br></p><p><br></p><p><br></p>
+</pre><p><br></p><p><br></p><p><br></p><pre class="ql-syntax" spellcheck="false">// ============ 三级复选框
+handleCheckAllChange(e){//一级change事件
+
+  this.ischeckAll = e
+
+  this.indeterminate = false
+  for(var i=0,len=this.goodsList.length; i&lt;len; i++){ //二级全选反选不确定
+    this.goodsList[i].selected = e
+    this.goodsList[i].indeterminate = false
+    for(var j=0,len1=this.goodsList[i].skuList.length; j&lt;len1; j++){
+      this.goodsList[i].skuList[j].selected = e
+    }
+  }
+
+},
+handleCheckedSkuAllChange(index, topId, e){//二级change事件
+  this.goodsList[index].selected = e//二级勾选后，子级全部勾选或者取消
+  if(e == false) this.goodsList[index].indeterminate = false //去掉二级不确定状态
+  var childrenArray = this.goodsList[index].skuList
+  if(childrenArray)
+    for(var i=0,len=childrenArray.length; i&lt;len; i++)
+      childrenArray[i].selected = e
+
+  this.getIsCheckAll()
+},
+handleCheckedSkuChange(topIndex, sonId, topId, e){//三级change事件
+  var childrenArray = this.goodsList[topIndex].skuList
+  var tickCount = 0, unTickCount = 0, len = childrenArray.length
+  for(var i = 0; i &lt; len; i++){
+    if(sonId == childrenArray[i].id) childrenArray[i].selected = e
+    if(childrenArray[i].selected == true) tickCount++
+    if(childrenArray[i].selected == false) unTickCount++
+  }
+  if(tickCount == len) {//三级级全勾选
+    this.goodsList[topIndex].selected = true
+    this.goodsList[topIndex].indeterminate = false
+
+  } else if(unTickCount == len) {//三级级全不勾选
+    this.goodsList[topIndex].selected = false
+    this.goodsList[topIndex].indeterminate = false
+  } else {
+    this.goodsList[topIndex].selected = false
+    this.goodsList[topIndex].indeterminate = true //添加二级不确定状态
+    this.indeterminate = true //添加一级不确定状态
+  }
+
+  this.getIsCheckAll()
+},
+getIsCheckAll(){
+  var tickCount = 0, unTickCount = 0, ArrLength = this.goodsList.length
+  for(var j=0; j&lt;ArrLength; j++){//全选checkbox状态
+    if(this.goodsList[j].selected == true) tickCount++
+    if(this.goodsList[j].selected == false) unTickCount++
+
+
+  }
+  if(tickCount == ArrLength) {//二级全勾选
+    this.ischeckAll = true
+    this.indeterminate = false
+  } else if(unTickCount == ArrLength) {//二级全不勾选
+    this.ischeckAll = false
+    this.indeterminate = false
+  } else {
+    this.ischeckAll = false
+    this.indeterminate = true //添加一级不确定状态
+  }
+},
+</pre><p><br></p>
