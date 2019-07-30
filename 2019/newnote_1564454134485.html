@@ -1,0 +1,22 @@
+<attachment contenteditable="false" data-atts="%5B%5D" data-aid=".atts-8ae0e5d4-6f1d-4af2-b8f6-80726f249b11"></attachment><pre class="ql-syntax" spellcheck="false">&lt;template&gt;
+  &lt;div&gt;
+    &lt;input type="text" v-for="(item,i) of items" v-model="items[i]" :key="i"&gt;
+    &lt;button @click="onAdd"&gt;添加&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default {
+  data() {
+    return {
+      items: []
+    }
+  },
+  methods: {
+    onAdd() {
+      this.items.push('')
+    }
+  }
+}
+&lt;/script&gt;
+</pre><p><br></p>
