@@ -1,0 +1,71 @@
+<attachment contenteditable="false" data-atts="%5B%5D" data-aid=".atts-9a12ed06-ff89-491d-8cf5-c18dc5d68807"></attachment><pre class="ql-syntax" spellcheck="false">package com.lsege.cloud.system.model.dao;
+
+import java.time.LocalDateTime;
+import java.io.Serializable;
+
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+
+import javax.validation.constraints.NotBlank;
+
+/**
+ * &lt;p&gt;
+ *
+ * &lt;/p&gt;
+ *
+ * @author 刘泽
+ * @since 2018-11-12
+ */
+@Data
+@EqualsAndHashCode(callSuper = false)
+@Accessors(chain = true)
+public class UserWorker implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
+    private Long id;
+
+    @ApiModelProperty(hidden = true)
+    private Long userId;
+
+    // @NotBlank
+    private String name;
+
+    //    @NotBlank
+    private String mobile;
+    //    @NotBlank
+    private String address;
+    //    @NotBlank
+    private String identityCard;
+    //    @NotBlank
+    private String noCrime;
+    //    @NotBlank
+    private String qualificationCertificate;
+    @ApiModelProperty(hidden = true)
+    private Integer status;
+
+    private String remark;
+    @ApiModelProperty(hidden = true)
+    private LocalDateTime createTime;
+    @ApiModelProperty(hidden = true)
+    private LocalDateTime accreditTime;
+
+    private String identityCardReverse;
+
+    private String legalIdentityCard;
+
+    private String businessLicense;
+
+    private String legalIdentityCardReverse;
+
+    private String personalPhoto;
+
+    private Integer version;
+
+    private String payCredentials;  //支付凭证
+
+
+}
+</pre><p><br></p>
